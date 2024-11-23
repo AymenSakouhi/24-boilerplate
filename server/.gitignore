@@ -1,0 +1,9 @@
+.idea
+node_modules
+dist
+dist-ssr
+.env
+.DS_Store
+.vscode/
+coverage/
+routeTree.gen.ts
