@@ -8,4 +8,11 @@ npx prisma generate
 If you ever change the prisma schema, you need to run the following command to update the database schema.
 ```shell
 npx prisma migrate dev
+npx prisma generate
+```
+
+At the end of this project you can run the following command to access frontend/backend at same time.
+This is achieved using concurrently package.
+```shell
+npm run dev // on the client folder
 ```
