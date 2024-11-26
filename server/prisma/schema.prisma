@@ -21,6 +21,7 @@ model User {
   email            String?         @unique
   writenPosts      Post[]          @relation("WrittenPosts")
   favoritePosts    Post[]          @relation("FavoritePosts")
+  writtenCatalog   Catalog[]       @relation("uploadedImages")
   UserPreference   UserPreference? @relation(fields: [UserPreferenceId], references: [id])
   UserPreferenceId String?         @unique
   // @@id([name, email])
@@ -31,6 +32,24 @@ model User {
 
   @@unique([age, name])
   @@index([email])
+}
+
+model Image {
+  id         String   @id @default(uuid())
+  name       String
+  blob       Bytes
+  Catalog    Catalog  @relation("uploadedTo", fields: [catalogId], references: [id])
+  catalogId  String
+  uploadedAt DateTime @default(now())
+  EditedAt   DateTime
+}
+
+model Catalog {
+  id        String  @id @default(uuid())
+  name      String?
+  createdBy User?   @relation("uploadedImages", fields: [creatorId], references: [id])
+  creatorId String?
+  images    Image[] @relation("uploadedTo")
 }
 
 model UserPreference {
@@ -49,7 +68,7 @@ model Post {
   authorId      String
   fovoriteBy    User?      @relation("FavoritePosts", fields: [fovoriteById], references: [id])
   fovoriteById  String?
-  Categoies     Category[]
+  Categories    Category[]
 }
 
 model Category {
